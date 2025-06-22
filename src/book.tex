@@ -1,0 +1,283 @@
+\documentclass[pagedoutpaper,twocolumn,9pt]{pagedout}
+\pagenumbering{gobble}
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage[table]{xcolor}
+
+\definecolor{mGreen}{rgb}{0,0.6,0}
+\definecolor{mGray}{rgb}{0.5,0.5,0.5}
+\definecolor{keyword_color}{rgb}{0.00,0,1.0}
+\definecolor{bg_color}{HTML}{fffFfb}
+
+\usepackage{float}
+\usepackage{adjustbox}
+\usepackage{booktabs}  
+
+\usepackage[justification=centering,labelfont=bf]{caption}
+\captionsetup[subfigure]{font=footnotesize,labelfont=footnotesize,labelformat=empty}
+
+\usepackage{subcaption}
+
+\usepackage[final]{listings}
+\lstset{ 
+  backgroundcolor=\color{bg_color},
+  breaklines=true,
+   frame=single,
+   basicstyle=\footnotesize\ttfamily,
+   xleftmargin=9pt,
+   framexleftmargin=5pt,
+   showstringspaces=false,
+   aboveskip=12pt,
+   belowskip=0pt,
+   % Make some parts appear in red.
+   moredelim=**[is][\color{red}]{@}{@},
+}
+\lstdefinelanguage
+   [6502]{Assembler}     % add a "x64" dialect of Assembler
+   [x86masm]{Assembler} % based on the "x86masm" dialect
+   % with these extra keywords:
+   {morekeywords={.BYTE,LDY,LDX,INC,LDA,BEQ,BNE,JSR,DEY,DEX,PHA,PLA,INY, %
+									STA,SEC,SBC,BCS,EOR,RTS,SEI,TXA,ASL,TAY,INX,CPY,TAX,RTI,}} % etc.
+
+
+\lstdefinestyle{6502Style}{
+    backgroundcolor=\color{bg_color},   
+    commentstyle=\color{mGreen},
+    keywordstyle=\color{keyword_color},
+    numberstyle=\color{mGray},
+    stringstyle=\color{mGreen},
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=1,
+    language=[6502]Assembler,
+    morekeywords={ICALVE,CALVEC,RTSL,call, ld, or, jr,ldr, str,ldir, EI, IM, .area}
+}
+\lstloadlanguages{[6502]Assembler}
+
+\newcommand*{\icode}[1]{{\texttt{#1}}}
+\newcommand*{\wicode}[1]{{\texttt{\textcolor{white}{#1}}}}
+
+\lstset{style=6502Style}
+\lstset{ 
+   aboveskip=5pt,
+   belowskip=0pt,
+}
+
+\makeatletter
+\newcommand{\fsize}{\f@size pt }
+\newcommand{\textFontName}{\f@family}
+\renewcommand{\maketitle}{
+\begin{flushleft}
+{\noindent\Huge\bf\@title}\break
+\end{flushleft}
+}
+\makeatother
+
+
+\usepackage{pgffor}
+\usepackage{pgfplots}
+\usepackage{makecell}
+\usepackage{subfiles}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\usetikzlibrary{arrows.meta}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+\usetikzlibrary{positioning,shapes}
+%\usepgfplotslibrary{external} 
+%\tikzexternalize
+
+
+\definecolor{c64_black}{HTML}{000000}
+\definecolor{c64_white}{HTML}{ffffff}
+\definecolor{c64_red}{HTML}{880000}
+\definecolor{c64_cyan}{HTML} {aaffee}
+\definecolor{c64_violet}{HTML}{cc44cc}
+\definecolor{c64_purple}{HTML}{cc44cc}
+\definecolor{c64_green}{HTML}{00cc55}
+\definecolor{c64_blue}{HTML} {0000aa}
+\definecolor{c64_yellow}{HTML} {eeee77}
+\definecolor{c64_orange}{HTML} {dd8855}
+\definecolor{c64_brown}{HTML}{664400}
+\definecolor{c64_lightred}{HTML}{ff7777}
+\definecolor{c64_ltred}{HTML}{ff7777}
+\definecolor{c64_darkgrey}{HTML}{333333}
+\definecolor{c64_grey}{HTML} {333333}
+\definecolor{c64_grey1}{HTML} {333333}
+\definecolor{c64_grey2}{HTML} {777777}
+\definecolor{c64_darkgray}{HTML}{333333}
+\definecolor{c64_gray}{HTML} {333333}
+\definecolor{c64_gray1}{HTML} {333333}
+\definecolor{c64_gray2}{HTML} {777777}
+\definecolor{c64_lightgreen}{HTML}{aaff66}
+\definecolor{c64_lightblue}{HTML} {0088ff}
+\definecolor{c64_lightgrey}{HTML}{bbbbbb}
+\definecolor{c64_lightgray}{HTML}{bbbbbb}
+\definecolor{c64_ltgreen}{HTML}{aaff66}
+\definecolor{c64_ltblue}{HTML} {0088ff}
+\definecolor{c64_ltgrey}{HTML}{bbbbbb}
+\definecolor{c64_ltgray}{HTML}{bbbbbb}
+\definecolor{c64_grey3}{HTML}{bbbbbb}
+\definecolor{c64_gray3}{HTML}{bbbbbb}
+
+\usepackage{fix-cm}    
+
+\makeatletter
+\newcommand\HUGE{\@setfontsize\Huge{32}{40}}
+\makeatother   
+
+\title{Psychedelia: A Puzzle}
+\author{Rob Hogan}
+
+\begin{document}    
+\maketitle
+\vspace{-0.8cm}
+Rob Hogan, \href{https://github.com/mwenge/tempest}{\textcolor{blue}{https://psychedeliasyndro.me}}
+\begin{lstlisting}[basicstyle=\ttfamily\small]
+starOneXPosOffsets        ;        5       
+.BYTE 0,1,1,1,0,-1,-1,-1  ;                
+.BYTE 0,2,0,-2            ;       4 4                                       
+.BYTE 0,3,0,-3            ;        3                                        
+.BYTE 0,4,0,-4            ;        2                                        
+.BYTE -1,1,5,5,1,-1,-5,-5 ;        1       
+.BYTE 0,7,0,-7            ;   4   000   4                                   
+                          ; 5  3210 0123  5                  
+starOneYPosOffsets        ;   4   000   4  
+.BYTE -1,-1,0,1,1,1,0,-1  ;        1                                        
+.BYTE -2,0,2,0            ;        2                                        
+.BYTE -3,0,3,0            ;        3                                        
+.BYTE -4,0,4,0            ;       4 4      
+.BYTE -5,-5,-1,1,5,5,1,-1 ;                                                 
+.BYTE -7,0,7,0            ;        5       
+\end{lstlisting}   
+This is an example of the data structure at the heart of Jeff Minter's \textit{Psychedelia}, the
+first ever light synthesiser. It is the seed of the algorithm that Minter used in games such as
+\textit{Tempest 2000} and the interactive music visualizer in the \textit{XBOX 360}. Maybe just
+by looking at the code above you can guess that the values are X and Y offsets from a centre origin
+that build up the picture given in the comment section on the right. The numbers in that illustration
+are in index into each line in the array: for example, the square of \icode{0}'s is from the line in
+both arrays. So given this information and assuming you have a colour table with the following values..
+\begin{adjustbox}{width=5cm,center}
+  \begin{tabular}{cccccccc}
+    \cellcolor[HTML]{000000}\textcolor{white}{\icode{0}} & \cellcolor{c64_blue}\textcolor{white}{\icode{1}} &
+    \cellcolor{c64_red}\textcolor{white}{\icode{2}} & \cellcolor{c64_purple}\textcolor{white}{\icode{3}} &
+    \cellcolor{c64_green}\icode{4} & \cellcolor{c64_cyan}\icode{5} &
+    \cellcolor{c64_yellow}\icode{6} & \cellcolor{c64_white}\icode{7}  \\
+  \end{tabular}
+\end{adjustbox}
+..see if you can figure out the algorithm Minter used to generate the sequence below. I've enlarged the 
+start of the sequence so you can begin to get a sense of how it operates. The numbers in the diagrams
+represent the values in the colour table. The numbers in the color table and the number of iterations
+made through the index offsets are somehow related. See if you can figure it out.
+If you're impatient to learn the answer, you can find it in the second and third chapters of 
+\href{https://github.com/mwenge/tempest}{\textcolor{blue}{https://psychedeliasyndro.me}}.
+
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage0.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage1.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage2.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage3.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage4.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage5.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage6.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage7.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage8.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage9.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage10.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage11.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage12.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage13.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage14.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage15.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage16.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage17.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage18.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage19.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage20.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage21.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage22.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage23.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{adjustbox}{width=8.5cm,center}
+  \begin{tabular}{rl}
+    \makecell[l]{
+      \subfile{src/maps/pattern0_ram_stage24.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage25.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage26.tex}
+      \hspace{0.1cm}
+      \subfile{src/maps/pattern0_ram_stage27.tex}
+    }\\
+  \end{tabular}
+\end{adjustbox}
+\begin{figure}[H]
+    \centering
+    \foreach \l in {28, 29, ..., 132}
+    {
+      \includegraphics[width=1.06cm]{src/maps/pixel_pattern_\l.png}%
+    }%
+\end{figure}
+\end{document}
+
