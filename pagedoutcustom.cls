@@ -8,7 +8,7 @@
 %% but WITHOUT ANY WARRANTY; without even the implied warranty of
 %% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{pagedout}[
+\ProvidesClass{pagedout2}[
     2019-05-12 v0.1
  Paged Out! LaTeX document class]
 %
@@ -27,7 +27,7 @@
 \newif\if@landscape
 \@landscapefalse
 \DeclareOption{pagedoutpaper}
-   {\setlength\@PaperHeight {11in}%
+   {\setlength\@PaperHeight {10.8in}%
     \setlength\@PaperWidth  {210mm}}
 \DeclareOption{a4paper}
    {\setlength\@PaperHeight {297mm}%
